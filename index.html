@@ -245,6 +245,10 @@
             color: #777;
         }
 
+        body.lock-scroll {
+            overflow: hidden;
+        }
+
         @keyframes heartbeat {
 
             0%,
@@ -276,7 +280,7 @@
     </style>
 </head>
 
-<body>
+<body class="lock-scroll">
 
     <audio id="birthdayMusic" loop>
         <source src="happybirthday.mp3" type="audio/mpeg">
@@ -351,16 +355,24 @@
     <script>
         function checkPass() {
             const input = document.getElementById('passInput').value;
-            if (input === "ND2911") {
-                const music = document.getElementById('birthdayMusic');
-                music.play().catch(e => console.log("Audio play blocked until user interaction."));
 
-                document.getElementById('security-overlay').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('security-overlay').style.display = 'none';
-                    document.getElementById('main-content').style.display = 'block';
-                    startHearts();
-                }, 800);
+            if (input === "nd2911n28d19") {
+
+                const music = document.getElementById('birthdayMusic');
+                music.play().catch(() => { });
+
+                // Hide overlay completely
+                const overlay = document.getElementById('security-overlay');
+                overlay.style.display = "none";
+
+                // Show main content
+                document.getElementById('main-content').style.display = "block";
+
+                // Allow scrolling after unlock
+                document.body.style.overflow = "auto";
+
+                startHearts();
+
             } else {
                 document.getElementById('error-msg').style.display = 'block';
             }
@@ -416,6 +428,5 @@
         });
     </script>
 </body>
-
 
 </html>
